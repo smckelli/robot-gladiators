@@ -52,7 +52,7 @@ var fight = function () {
         if (confirmSkip) {
             window.alert(playerName + " has decided to skip this fight. Goodbye!");
             //subtract money from playerMoney for skipping
-            playerMoney = playerMoney -2;
+            playerMoney = playerMoney - 2;
         }
         //if no (false), ask question again by running fight() again
         else {
