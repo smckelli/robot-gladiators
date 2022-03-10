@@ -4,26 +4,42 @@ var randomNumber = function (min, max) {
   return value;
 };
 
+var fightOrSkip = function () {
+  // ask player if they's like to fight or skip using fightOrSkip function
+  var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter FIGHT or SKIP to shoose.");
+
+  if (promptFight === "" || promptFight === null) {
+    window.alert("You need to provide a valid answer! Please try again.");
+    return fightOrSkip();
+  }
+
+  promptFight = promptFight.toLowerCase();
+
+  //   if a player picks 'skip' confirm and then stop the loop
+  if (promptFight === "skip") {
+    // confirm the player wants to skip
+    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+    // if yes (true), leave fight
+    if (confirmSkip) {
+      window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+      //subtract money for skipping
+      playerInfo.playerMoney = playerInfo.money - 10;
+      shop();
+
+      return true;
+    }
+  }
+  return false;
+}
+
 // fight function (now with parameter for enemy's name)
 var fight = function (enemy) {
   while (playerInfo.health > 0 && enemy.health > 0) {
     // ask player if they'd like to fight or run
-    var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
-
-    // if player picks "skip" confirm and then stop the loop
-    if (promptFight === 'skip' || promptFight === 'SKIP') {
-      // confirm player wants to skip
-      var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-      // if yes (true), leave fight
-      if (confirmSkip) {
-        window.alert(playerInfo.name + ' has decided to skip this fight. Goodbye!');
-        // subtract money from playerInfo.money for skipping
-        playerInfo.money = playerInfo.money - 10;
-        console.log("playerInfo.money", playerInfo.money)
-        break;
-      }
-    }
+    if (fightOrSkip()) {
+      break;
+    };
 
     // remove enemy's health by subtracting the amount set in the playerInfo.attack variable
     var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
@@ -161,17 +177,17 @@ var shop = function () {
 };
 
 // function to set name
-var getPlayerName = function() {
+var getPlayerName = function () {
   var name = "";
   while (name === "" || name === null) {
     name = prompt("What  is your robot's name?");
   }
-// ***************************************
-// ADD LOOP HERE WITH PROMPT AND CONDITION
-// ***************************************
+  // ***************************************
+  // ADD LOOP HERE WITH PROMPT AND CONDITION
+  // ***************************************
 
-console.log("Your robot's name is " + name);
-return name;
+  console.log("Your robot's name is " + name);
+  return name;
 }
 
 
@@ -188,21 +204,19 @@ var playerInfo = {
   refillHealth: function () {
     if (this.money >= 7) {
       window.alert("Refilling player's health by 20 for 7 dollars.");
-    this.health += 20;
-    this.money -= 7;
-    }
-    else {
+      this.health += 20;
+      this.money -= 7;
+    } else {
       window.alert("You don't have enough money!");
     }
   },
-  upgradeAttack: function() {
+  upgradeAttack: function () {
     if (this.money >= 7) {
       window.alert("Upgrading player's attack by 6 for 7 dollars.")
-    this.attack += 6;
-    this.money -= 7;
-    }
-    else {
-      window. alert("You don't have enough money!");
+      this.attack += 6;
+      this.money -= 7;
+    } else {
+      window.alert("You don't have enough money!");
     }
   }
 };
